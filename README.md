@@ -95,7 +95,82 @@ python3 retarget.py <sample-filepath> # Specific file
     TODO (Nishant) 
 
 ### Segmentation / POSA 
-    TODO (Nishant) 
+To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
+
+1. First clone the repo, then create a [conda](https://docs.conda.io/) env and install the necessary dependencies:
+```shell
+git clone https://github.com/sha2nkt/deco.git
+cd deco
+conda create -n deco python=3.9 -y
+conda activate deco
+pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+```
+It creates an conda env of python 3.9, with compatible dependencies
+
+2. Install **PyTorch3D** from source:
+```shell
+git clone https://github.com/facebookresearch/pytorch3d.git
+cd pytorch3d
+pip install .
+cd ..
+```
+
+3. Install the other dependancies and download the required data:
+```shell
+pip install -r requirements.txt
+sh fetch_data.sh
+```
+
+4. Please download [SMPL](https://smpl.is.tue.mpg.de/) (version 1.1.0) and [SMPL-X](https://smpl-x.is.tue.mpg.de/) (v1.1) files into the data folder. Please rename the SMPL files to ```SMPL_FEMALE.pkl```, ```SMPL_MALE.pkl``` and ```SMPL_NEUTRAL.pkl```. The directory structure for the ```data``` folder has been elaborated below:
+
+```
+├── preprocess
+├── smpl
+│   ├── SMPL_FEMALE.pkl
+│   ├── SMPL_MALE.pkl
+│   ├── SMPL_NEUTRAL.pkl
+│   ├── smpl_neutral_geodesic_dist.npy
+│   ├── smpl_neutral_tpose.ply
+│   ├── smplpix_vertex_colors.npy
+├── smplx
+│   ├── SMPLX_FEMALE.npz
+│   ├── SMPLX_FEMALE.pkl
+│   ├── SMPLX_MALE.npz
+│   ├── SMPLX_MALE.pkl
+│   ├── SMPLX_NEUTRAL.npz
+│   ├── SMPLX_NEUTRAL.pkl
+│   ├── smplx_neutral_tpose.ply
+├── weights
+│   ├── pose_hrnet_w32_256x192.pth
+├── J_regressor_extra.npy
+├── base_dataset.py
+├── mixed_dataset.py
+├── smpl_partSegmentation_mapping.pkl
+├── smpl_vert_segmentation.json
+└── smplx_vert_segmentation.json
+```
+
+**NOTE**: Sometimes running inferences on CPU might cause some hardware defination issue, which can be resolved by defining the following on **ln:30** in `inference.py`:
+```python
+checkpoint = torch.load(args.model_path, map_location=torch.device('cpu'))
+```
+
+
+**NOTE**: Sometimes `Mapping` might cause some comapatibilty issue with *python 3.9*, to resolve this, use the following import:
+```python
+from collections.abc import Mapping
+```
+
+### Running demo on images/per-frame:
+```shell
+python inference.py \
+    --img_src example_images \
+    --out_dir demo_out
+```
+This command runs DECO on the images stored in the `example_images/` directory specified in `--img_src`, saving a rendering and a colored mesh in `demo_out/` directory
+
+For referring more in-depth Training and Testing directions, refer to the official [DECO implementation](https://github.com/kulendu/deco/blob/main/README.md).
+
 
 ## E. Overlaying 3D character over video 
     ASK Grace
