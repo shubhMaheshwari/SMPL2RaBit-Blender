@@ -92,7 +92,60 @@ python3 retarget.py <sample-filepath> # Specific file
 ## D. From RGB video  
 
 ### Pose estimation 
-    TODO (Nishant) 
+To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
+
+1. Clone the repo:
+```shell
+git clone https://github.com/mkocabas/VIBE.git
+```
+
+2. Install the requirements using `virtualenv` or  `conda`:
+```shell
+# pip (virtualenv)
+source scripts/install_pip.sh
+
+# conda
+source scripts/install_conda.sh
+```
+
+3. To run **VIBE** on any arbitary video, download the required data(i.e. the trained model and SMPL model parameters). To do this you can just run:
+```shell
+source scripts/prepare_data.sh
+```
+
+4. Then, for running the demo:
+```shell
+# Run on a local video
+python demo.py --vid_file sample_video.mp4 --output_folder output/ --display
+
+# Run on a YouTube video
+python demo.py --vid_file https://www.youtube.com/watch?v=wPZP8Bwxplo --output_folder output/ --display
+```
+
+Refer to [VIBE/doc/demo.md](https://github.com/mkocabas/VIBE/blob/master/doc/demo.md) for more details about the demo code.
+
+Sample demo output with the `--sideview` flag:
+
+5. For running the demo on CPU:
+```python
+''' 
+for demo.py:
+loading the checkpoints and locating on the 'CPU' device
+'''
+ckpt = torch.load(pretrained_file, map_location=torch.device('cpu'))
+
+''' 
+for lib/models/vibe.py: 
+loading the pretrained dictionary and checkpoints and then locating on the 'CPU' device
+'''
+#ln :96
+pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
+# ln: 147
+checkpoint = torch.load(pretrained, map_location=torch.device('cpu'))
+# ln: 154
+pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
+```
+
 
 ### Segmentation / POSA 
 To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
