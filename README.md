@@ -145,6 +145,8 @@ checkpoint = torch.load(pretrained, map_location=torch.device('cpu'))
 # ln: 154
 pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
 ```
+For more installation and running inferences, refer to the official [VIBE](https://github.com/mkocabas/VIBE) documentation.
+
 
 
 ### Segmentation / POSA 
