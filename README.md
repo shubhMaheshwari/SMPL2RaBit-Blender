@@ -93,10 +93,15 @@ python3 retarget.py <sample-filepath> # Specific file
 
 ### Pose estimation 
 To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
+<hr>
+
+*NOTE: This is the fine-tined version of VIBE, maintained by [Kulendu](https://github.com/kulendu).*
+
+<hr>
 
 1. Clone the repo:
 ```shell
-git clone https://github.com/mkocabas/VIBE.git
+git clone https://github.com/kulendu/SMPL2RaBit-Blender.git
 ```
 
 2. Install the requirements using `virtualenv` or  `conda`:
@@ -145,7 +150,9 @@ checkpoint = torch.load(pretrained, map_location=torch.device('cpu'))
 # ln: 154
 pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
 ```
+For more installation and running inferences, refer to the official [VIBE](https://github.com/mkocabas/VIBE) documentation.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fZCIhiL4CwDNiMUCvePzBFbMVsA3LOZd?usp=sharing)
 
 ### Segmentation / POSA 
 To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
