@@ -101,7 +101,7 @@ To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks
 
 1. Clone the repo:
 ```shell
-git clone https://github.com/kulendu/SMPL2RaBit-Blender.git
+git clone https://github.com/kulendu/VIBE.git
 ```
 
 2. Install the requirements using `virtualenv` or  `conda`:
