@@ -147,7 +147,7 @@ pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['mode
 ```
 For more installation and running inferences, refer to the official [VIBE](https://github.com/mkocabas/VIBE) documentation.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fZCIhiL4CwDNiMUCvePzBFbMVsA3LOZd?usp=sharing)]
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fZCIhiL4CwDNiMUCvePzBFbMVsA3LOZd?usp=sharing)
 
 ### Segmentation / POSA 
 To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
