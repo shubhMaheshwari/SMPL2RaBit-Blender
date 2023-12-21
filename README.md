@@ -93,7 +93,12 @@ python3 retarget.py <sample-filepath> # Specific file
 
 ### Pose estimation 
 To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
-`This is the fine-tined version of VIBE, maintained by [Kulendu](https://github.com/kulendu)`
+<hr>
+
+*NOTE: This is the fine-tined version of VIBE, maintained by [Kulendu](https://github.com/kulendu).*
+
+<hr>
+
 1. Clone the repo:
 ```shell
 git clone https://github.com/kulendu/SMPL2RaBit-Blender.git
