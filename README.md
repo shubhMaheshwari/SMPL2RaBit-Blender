@@ -3,12 +3,22 @@
 
 ## A. Installation
 
-1. Download the codebase
+1. Install OS 
+    
+    #### Ubuntu 
     ```
-        git --recursive 
+    TODO
     ```
+    
+    #### Windows
+    1. Install [WSL2](https://www.omgubuntu.co.uk/how-to-install-wsl2-on-windows-10)
+    2. Install [CUDA](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)  
+    3.  
 
-2. Download [blender](https://www.blender.org/download/)
+2. Download the codebase
+    ```
+        git --recursive https://github.com/shubhMaheshwari/SMPL2RaBit-Blender.git
+    ```
 
 3. Python packages 
     <details>
@@ -32,7 +42,7 @@
     1. Clone RaBit Library
 
     ```
-        git clone https://github.com/zhongjinluo/RaBit.git
+        git clone https://github.com/kulendu/RaBit.git 
         cd RaBit 
     ```
     2. Download model data from [link](https://drive.google.com/file/d/1yvweTYPKtmuMt5Eu7CHZ4-Do4CRYLFtp/view?usp=sharing) to `<HOME_PATH>/RaBit`
@@ -43,11 +53,10 @@
     ```
     </details>
 
+5. Download [blender](https://www.blender.org/download/)
 
 
 *Note- Raise an issue if you are having trouble installing any of the above packages*
-
-
 
 
 
