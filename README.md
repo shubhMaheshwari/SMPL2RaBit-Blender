@@ -17,7 +17,7 @@
 
 2. Ubuntu Modules
 ```
-sudo apt install unzip
+sudo apt install unzip cmake
 ```     
 
 2. Download the codebase
@@ -40,9 +40,20 @@ sudo apt install unzip
     ```
     unzip rabit_data.zip
     ```
-    </details>
+    4. Python dependencies
+    ```
+        pip install joblib torch openmesh
+    ```
+        or
+   ```
+    pip install -r requirements.txt
+   ```
 
-5. Download [blender](https://www.blender.org/download/)
+   </details>
+
+
+    
+6. Download [blender](https://www.blender.org/download/)
 
 
 *Note- Raise an issue if you are having trouble installing any of the above packages*
