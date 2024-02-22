@@ -45,144 +45,144 @@
 ## B. SMPL from RGB video  
 
 ### Pose estimation 
-    To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
-    <hr>
-    
-    *NOTE: This is the fine-tined version of VIBE, maintained by [Kulendu](https://github.com/kulendu).*
+To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
+<hr>
 
-    <hr>
-    
-    1. Clone the repo:
-    ```shell
-    git clone https://github.com/kulendu/VIBE.git
-    ```
-    
-    2. Install the requirements using `virtualenv` or  `conda`:
-    ```shell
-    # pip (virtualenv)
-    source scripts/install_pip.sh
-    
-    # conda
-    source scripts/install_conda.sh
-    ```
-    
-    3. To run **VIBE** on any arbitary video, download the required data(i.e. the trained model and SMPL model parameters). To do this you can just run:
-    ```shell
-    source scripts/prepare_data.sh
-    ```
-    
-    4. Then, for running the demo:
-    ```shell
-    # Run on a local video
-    python demo.py --vid_file sample_video.mp4 --output_folder output/ --display
-    
-    # Run on a YouTube video
-    python demo.py --vid_file https://www.youtube.com/watch?v=wPZP8Bwxplo --output_folder output/ --display
-    ```
-    
-    Refer to [VIBE/doc/demo.md](https://github.com/mkocabas/VIBE/blob/master/doc/demo.md) for more details about the demo code.
-    
-    Sample demo output with the `--sideview` flag:
-    
-    5. For running the demo on CPU:
-    ```python
-    ''' 
-    for demo.py:
-    loading the checkpoints and locating on the 'CPU' device
-    '''
-    ckpt = torch.load(pretrained_file, map_location=torch.device('cpu'))
-    
-    ''' 
-    for lib/models/vibe.py: 
-    loading the pretrained dictionary and checkpoints and then locating on the 'CPU' device
-    '''
-    #ln :96
-    pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
-    # ln: 147
-    checkpoint = torch.load(pretrained, map_location=torch.device('cpu'))
-    # ln: 154
-    pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
-    ```
-    For more installation and running inferences, refer to the official [VIBE](https://github.com/mkocabas/VIBE) documentation.
-    
-    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fZCIhiL4CwDNiMUCvePzBFbMVsA3LOZd?usp=sharing)
+*NOTE: This is the fine-tined version of VIBE, maintained by [Kulendu](https://github.com/kulendu).*
+
+<hr>
+
+1. Clone the repo:
+```shell
+git clone https://github.com/kulendu/VIBE.git
+```
+
+2. Install the requirements using `virtualenv` or  `conda`:
+```shell
+# pip (virtualenv)
+source scripts/install_pip.sh
+
+# conda
+source scripts/install_conda.sh
+```
+
+3. To run **VIBE** on any arbitary video, download the required data(i.e. the trained model and SMPL model parameters). To do this you can just run:
+```shell
+source scripts/prepare_data.sh
+```
+
+4. Then, for running the demo:
+```shell
+# Run on a local video
+python demo.py --vid_file sample_video.mp4 --output_folder output/ --display
+
+# Run on a YouTube video
+python demo.py --vid_file https://www.youtube.com/watch?v=wPZP8Bwxplo --output_folder output/ --display
+```
+
+Refer to [VIBE/doc/demo.md](https://github.com/mkocabas/VIBE/blob/master/doc/demo.md) for more details about the demo code.
+
+Sample demo output with the `--sideview` flag:
+
+5. For running the demo on CPU:
+```python
+''' 
+for demo.py:
+loading the checkpoints and locating on the 'CPU' device
+'''
+ckpt = torch.load(pretrained_file, map_location=torch.device('cpu'))
+
+''' 
+for lib/models/vibe.py: 
+loading the pretrained dictionary and checkpoints and then locating on the 'CPU' device
+'''
+#ln :96
+pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
+# ln: 147
+checkpoint = torch.load(pretrained, map_location=torch.device('cpu'))
+# ln: 154
+pretrained_dict = torch.load(pretrained, map_location=torch.device('cpu'))['model']
+```
+For more installation and running inferences, refer to the official [VIBE](https://github.com/mkocabas/VIBE) documentation.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fZCIhiL4CwDNiMUCvePzBFbMVsA3LOZd?usp=sharing)
 
 ### Segmentation / POSA 
-    To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
-    
-    1. First clone the repo, then create a [conda](https://docs.conda.io/) env and install the necessary dependencies:
-    ```shell
-    git clone https://github.com/sha2nkt/deco.git
-    cd deco
-    conda create -n deco python=3.9 -y
-    conda activate deco
-    pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
-    ```
-    It creates an conda env of python 3.9, with compatible dependencies
-    
-    2. Install **PyTorch3D** from source:
-    ```shell
-    git clone https://github.com/facebookresearch/pytorch3d.git
-    cd pytorch3d
-    pip install .
-    cd ..
-    ```
-    
-    3. Install the other dependancies and download the required data:
-    ```shell
-    pip install -r requirements.txt
-    sh fetch_data.sh
-    ```
-    
-    4. Please download [SMPL](https://smpl.is.tue.mpg.de/) (version 1.1.0) and [SMPL-X](https://smpl-x.is.tue.mpg.de/) (v1.1) files into the data folder. Please rename the SMPL files to ```SMPL_FEMALE.pkl```, ```SMPL_MALE.pkl``` and ```SMPL_NEUTRAL.pkl```. The directory structure for the ```data``` folder has been elaborated below:
-    
-    ```
-    ├── preprocess
-    ├── smpl
-    │   ├── SMPL_FEMALE.pkl
-    │   ├── SMPL_MALE.pkl
-    │   ├── SMPL_NEUTRAL.pkl
-    │   ├── smpl_neutral_geodesic_dist.npy
-    │   ├── smpl_neutral_tpose.ply
-    │   ├── smplpix_vertex_colors.npy
-    ├── smplx
-    │   ├── SMPLX_FEMALE.npz
-    │   ├── SMPLX_FEMALE.pkl
-    │   ├── SMPLX_MALE.npz
-    │   ├── SMPLX_MALE.pkl
-    │   ├── SMPLX_NEUTRAL.npz
-    │   ├── SMPLX_NEUTRAL.pkl
-    │   ├── smplx_neutral_tpose.ply
-    ├── weights
-    │   ├── pose_hrnet_w32_256x192.pth
-    ├── J_regressor_extra.npy
-    ├── base_dataset.py
-    ├── mixed_dataset.py
-    ├── smpl_partSegmentation_mapping.pkl
-    ├── smpl_vert_segmentation.json
-    └── smplx_vert_segmentation.json
-    ```
-    
-    **NOTE**: Sometimes running inferences on CPU might cause some hardware defination issue, which can be resolved by defining the following on **ln:30** in `inference.py`:
-    ```python
-    checkpoint = torch.load(args.model_path, map_location=torch.device('cpu'))
-    ```
-    
-    
-    **NOTE**: Sometimes `Mapping` might cause some comapatibilty issue with *python 3.9*, to resolve this, use the following import:
-    ```python
-    from collections.abc import Mapping
-    ```
-    
-    ### Running demo on images/per-frame:
-    ```shell
-    python inference.py \
-        --img_src example_images \
-        --out_dir demo_out
-    ```
-    This command runs DECO on the images stored in the `example_images/` directory specified in `--img_src`, saving a rendering and a colored mesh in `demo_out/` directory
-    
-    For referring more in-depth Training and Testing directions, refer to the official [DECO implementation](https://github.com/kulendu/deco/blob/main/README.md).
+To setup [DECO](https://github.com/sha2nkt/deco), refer the following steps:
+
+1. First clone the repo, then create a [conda](https://docs.conda.io/) env and install the necessary dependencies:
+```shell
+git clone https://github.com/sha2nkt/deco.git
+cd deco
+conda create -n deco python=3.9 -y
+conda activate deco
+pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+```
+It creates an conda env of python 3.9, with compatible dependencies
+
+2. Install **PyTorch3D** from source:
+```shell
+git clone https://github.com/facebookresearch/pytorch3d.git
+cd pytorch3d
+pip install .
+cd ..
+```
+
+3. Install the other dependancies and download the required data:
+```shell
+pip install -r requirements.txt
+sh fetch_data.sh
+```
+
+4. Please download [SMPL](https://smpl.is.tue.mpg.de/) (version 1.1.0) and [SMPL-X](https://smpl-x.is.tue.mpg.de/) (v1.1) files into the data folder. Please rename the SMPL files to ```SMPL_FEMALE.pkl```, ```SMPL_MALE.pkl``` and ```SMPL_NEUTRAL.pkl```. The directory structure for the ```data``` folder has been elaborated below:
+
+```
+├── preprocess
+├── smpl
+│   ├── SMPL_FEMALE.pkl
+│   ├── SMPL_MALE.pkl
+│   ├── SMPL_NEUTRAL.pkl
+│   ├── smpl_neutral_geodesic_dist.npy
+│   ├── smpl_neutral_tpose.ply
+│   ├── smplpix_vertex_colors.npy
+├── smplx
+│   ├── SMPLX_FEMALE.npz
+│   ├── SMPLX_FEMALE.pkl
+│   ├── SMPLX_MALE.npz
+│   ├── SMPLX_MALE.pkl
+│   ├── SMPLX_NEUTRAL.npz
+│   ├── SMPLX_NEUTRAL.pkl
+│   ├── smplx_neutral_tpose.ply
+├── weights
+│   ├── pose_hrnet_w32_256x192.pth
+├── J_regressor_extra.npy
+├── base_dataset.py
+├── mixed_dataset.py
+├── smpl_partSegmentation_mapping.pkl
+├── smpl_vert_segmentation.json
+└── smplx_vert_segmentation.json
+```
+
+**NOTE**: Sometimes running inferences on CPU might cause some hardware defination issue, which can be resolved by defining the following on **ln:30** in `inference.py`:
+```python
+checkpoint = torch.load(args.model_path, map_location=torch.device('cpu'))
+```
+
+
+**NOTE**: Sometimes `Mapping` might cause some comapatibilty issue with *python 3.9*, to resolve this, use the following import:
+```python
+from collections.abc import Mapping
+```
+
+### Running demo on images/per-frame:
+```shell
+python inference.py \
+    --img_src example_images \
+    --out_dir demo_out
+```
+This command runs DECO on the images stored in the `example_images/` directory specified in `--img_src`, saving a rendering and a colored mesh in `demo_out/` directory
+
+For referring more in-depth Training and Testing directions, refer to the official [DECO implementation](https://github.com/kulendu/deco/blob/main/README.md).
 
 ### C. Retargetting
 
