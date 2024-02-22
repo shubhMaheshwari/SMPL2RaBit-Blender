@@ -15,6 +15,11 @@
     2. Install [CUDA](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)  
     3.  
 
+2. Ubuntu Modules
+```
+sudo apt install unzip
+```     
+
 2. Download the codebase
     ```
         git --recursive https://github.com/shubhMaheshwari/SMPL2RaBit-Blender.git
