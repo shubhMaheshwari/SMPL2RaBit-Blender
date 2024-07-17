@@ -1,38 +1,37 @@
 # SMPL2RABIT-Blender 
-    - Retarget motion from SMPL to RaBit module  
+    - Retarget motion from RGB video RaBit models using SMPL   
 
 ## A. Installation
 
-1. Download the codebase
-    ```
-        git --recursive 
-    ```
-
-2. Download [blender](https://www.blender.org/download/)
-
-3. Python packages 
-    <details>
-    <summary>  Details </summary>
-    * Command Line
+1. Install OS 
     
-    * Open terminal using `Cntr-shift-T` or `Cmd-shift-T` then paste
+    #### Ubuntu 
+    ```
+    TODO
+    ```
+    
+    #### Windows
+    1. Install [WSL2](https://www.omgubuntu.co.uk/how-to-install-wsl2-on-windows-10)
+    2. Install [CUDA](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)  
+    3.  
 
+2. Ubuntu Modules
+```
+sudo apt install unzip cmake
+```     
+
+2. Download the codebase
     ```
-        <blender-python-path> pip install meshio
+        git --recursive https://github.com/shubhMaheshwari/SMPL2RaBit-Blender.git
     ```
-            
-    * Example in Linux
-            
-        ```
-        /home/shubh/blender-4.0.1-linux-x64/4.0/python/bin/python3.10 pip install meshio
-        ```
+
 4. Rabit installation
     <details>
     <summary>  Details </summary>
     1. Clone RaBit Library
 
     ```
-        git clone https://github.com/zhongjinluo/RaBit.git
+        git clone https://github.com/kulendu/RaBit.git 
         cd RaBit 
     ```
     2. Download model data from [link](https://drive.google.com/file/d/1yvweTYPKtmuMt5Eu7CHZ4-Do4CRYLFtp/view?usp=sharing) to `<HOME_PATH>/RaBit`
@@ -41,55 +40,25 @@
     ```
     unzip rabit_data.zip
     ```
-    </details>
+    4. Python dependencies
+    ```
+        pip install joblib torch openmesh
+    ```
+        or
+   ```
+    pip install -r requirements.txt
+   ```
 
+   </details>
+
+
+    
+6. Download [blender](https://www.blender.org/download/)
 
 
 *Note- Raise an issue if you are having trouble installing any of the above packages*
 
-
-
-
-
-###  B. Rendering 
-Renders a video of motion transfer from smpl file dataset to RaBit Model.  
-
-- Input details
-
-    `<sample-filepath>` is the path to the `.pkl` file containing the smpl:
-        
-        pose params - TxJx3, Rotation of SMPL joints (24 Joints version)
-        body params - vec(10), Body parametes of SMPL Mesh (10 dimension version )
-        camera ext - Tx6 or None, 6D camera pose (10 dimension version )
-        camera int - K or None, Camera Intrinsic params
-
-
-
-- Command Line
-
-    ```
-     blender --background --python rabit_render.py # For complete dataset
-    ```
-    Or 
-    ```
-    python3 renderer.py <smpl-filepath> # Specific file
-    ```
-
-
-
-## C. Retargetting  
-To retarget .trc file to SMPL format  
-```
-python3 retarget.py # For complete dataset
-```
-Or 
-```
-python3 retarget.py <sample-filepath> # Specific file
-```
-
-
-
-## D. From RGB video  
+## B. SMPL from RGB video  
 
 ### Pose estimation 
 To setup [VIBE](https://github.com/mkocabas/VIBE), run the following code chunks:
@@ -231,7 +200,49 @@ This command runs DECO on the images stored in the `example_images/` directory s
 
 For referring more in-depth Training and Testing directions, refer to the official [DECO implementation](https://github.com/kulendu/deco/blob/main/README.md).
 
+### C. Retargetting
 
-## E. Overlaying 3D character over video 
-    ASK Grace
+
+###  D. Rendering 
+Renders a video of motion transfer from smpl file dataset to RaBit Model.  
+
+
+- Installation 
+    <details>
+    <summary>  Details </summary>
+    * Command Line
+    
+    * Open terminal using `Cntr-shift-T` or `Cmd-shift-T` then paste
+
+    ```
+        <blender-python-path> pip install meshio
+    ```
+            
+    * Example in Linux
+            
+        ```
+        /home/shubh/blender-4.0.1-linux-x64/4.0/python/bin/python3.10 pip install meshio
+        ```
+
+- Input details
+
+    `<sample-filepath>` is the path to the `.pkl` file containing the smpl:
+        
+        pose params - TxJx3, Rotation of SMPL joints (24 Joints version)
+        body params - vec(10), Body parametes of SMPL Mesh (10 dimension version )
+        camera ext - Tx6 or None, 6D camera pose (10 dimension version )
+        camera int - K or None, Camera Intrinsic params
+
+
+
+- Command Line
+
+    ```
+     blender --background --python rabit_render.py # For complete dataset
+    ```
+    Or 
+    ```
+    python3 renderer.py <smpl-filepath> # Specific file
+    ```
+
 
