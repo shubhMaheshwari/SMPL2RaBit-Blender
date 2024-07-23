@@ -90,8 +90,30 @@ class Mesh:
 
     def distorte(self,method):
         if method == 'remesh':
-            new_indices = np.random.permutation(self.model.v_template.shape[0])
-            self.mappping = self.update_mapping(new_indices)
+            new_indices = np.random.permutation(self.vertices.shape[1])
+            
+            
+            self.mapping = new_indices
+            self.vertices = self.vertices[:,new_indices]
+            self.vertex2joints = self.vertex2joints[:,new_indices]
+            self.lbs_weights = self.lbs_weights[new_indices]
+
+
+            # Step 2: Create an empty array of the same length for the inverse mapping
+            inverse_mapping = np.empty_like(new_indices)
+
+            # Step 3: Fill the inverse mapping array
+            for i, p in enumerate(new_indices):
+                inverse_mapping[p] = i
+
+            # Inverse map the faces
+            self.faces = inverse_mapping[self.faces]
+
+            # Rearrange faces 
+            new_face_indices = np.random.permutation(self.faces.shape[0])
+            self.faces = self.faces[new_face_indices]
+
+
 
 
         elif method == 'decimate':
@@ -104,41 +126,37 @@ class Mesh:
         elif method == 'gaussian noise':
             args.gaussian_noise_std = 0.01 * self.get_bounding_box() # Distrort vertices by 1% of the bounding box. 
             noise = np.random.normal(0, args.gaussian_noise_std, self.nV)
+        else: 
+            raise NotImplementedError("Distortion Method:{} not implemented:".format(method))
+def save_experiment(args,source,target):
 
-    def update_mapping(self,target):
-        # assert source.model == 'SMPL' and source.distortion == '', f"Current experiments assume the source to be the  SMPL model in T-pose and no distorion"
 
-        # Hash join: https://www.geeksforgeeks.org/difference-between-hash-join-and-sort-merge-join/
-        # Build 
+    source_dict = source.get_mesh_sequence()
+    target_dict = target.get_mesh_sequence()
 
-        # Probe
-        # Step 1: Initialize
-        # source_mapping = {smpl_index: source_index for smpl_index, source_index in smpl_to_source.T}
-        
-        # # Step 3: Create the final mapping
-        # final_pairs = []
-        # for smpl_index, target_index in smpl_to_target.T:
-        #     if smpl_index in source_mapping:
-        #         # This SMPL index has a corresponding Source index
-        #         source_index = source_mapping[smpl_index]
-        #         final_pairs.append([source_index, target_index])
-        
-        # # Step 4: Convert to numpy.ndarray
-        # final_mapping = np.array(final_pairs).T  # Transpose to get 2xM shape
-    
-        # return final_mapping
 
-        # Example usage
-        # smpl_to_source = np.array([[SMPL indices], [Source indices]])
-        # smpl_to_target = np.array([[SMPL indices], [Target indices]])
-        # final_mapping = inner_join_mappings(smpl_to_source, smpl_to_target)
-        raise NotImplementedError("Write code to update the mapping. Using hash join")
+    save_dict = {  
+        'source_vertices':source_dict['vertices'][0], 
+        'source_faces': source_dict['faces'], 
+        'target_vertices': target_dict['vertices'][0], 
+        'target_faces': target_dict['faces'],
+        'mapping': target_dict['mapping']
+        }
 
-def save_experiments(args,source,target):
-    raise NotImplementedError("Write code to save the experiments")
+    np.save(os.path.join(args.out_dir,f'{args.source}_to_{args.source}_gt.npy'),save_dict)    
 
-def render(args,source,target):
-    raise NotImplementedError("Write code to render the experiments")
+def render_experiment(args): 
+    data = np.load(os.path.join(args.out_dir,f'{args.source}_to_{args.source}_gt.npy'),allow_pickle=True).item()
+    import polyscope as ps
+
+    ps.init()
+
+    ps_source = ps.register_surface_mesh("Source", data['source_vertices'], data['source_faces'])
+    ps_target = ps.register_surface_mesh("Target", data['target_vertices'], data['target_faces'])
+
+    ps.show()
+
+
 
 
 def main(args):
@@ -156,6 +174,7 @@ def main(args):
         return 
 
 
+
     visualizer = Visualizer() if args.render else None #Create a polyscope visualizer if we are rendering
 
     device = torch.device('cuda' if torch.cuda.is_available() and args.gpu else 'cpu')
@@ -168,15 +187,16 @@ def main(args):
     # Create target mesh
     target = Mesh(args.target,visualizer=visualizer,logger=logger,cmd_args=args,device=device)
     target.distorte('remesh')
-    target.distorte(args.distorion)
+    
+    # Retarget Everything
+    if args.out_dir != '':
+        save_experiment(args,source,target)
     
 
-    # Retarget Everything
-    if args.out.dir != '':
-        save_experiments(args,source,target)
-    
     if args.render:
-        render_experiments(args,source,target)    
+        render_experiment(args)    
+
+
 
 if __name__ == '__main__':
 

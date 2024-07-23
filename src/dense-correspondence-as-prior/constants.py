@@ -36,7 +36,8 @@ parser.add_argument('--distortions', dest='distortions', nargs='?', const=None, 
 parser.add_argument('--distorion', type=str, default="", help="Whether to change the shape of the target model")
 
 parser.add_argument('-f', '--force',action='store_true',help="forces a re-run on retargetting even if pkl file containg smpl data is already present.")  # on/off flag
-parser.add_argument('--render', action='store_true', help="Render a video and save it it in RENDER_DIR. Can also be set in the utils.py")  # on/off flag
+
+parser.add_argument('--render', action='store_true', default=True, help="Render a video and save it it in RENDER_DIR. Can also be set in the utils.py")  # on/off flag
 
 parser.add_argument('--debug', dest='debug', action='store_true',  help="Debug and run on less number of frames")
 parser.add_argument('--no-debug', dest='debug', action='store_false',default=False, help="Debug and run on less number of frames")
