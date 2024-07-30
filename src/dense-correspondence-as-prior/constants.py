@@ -11,39 +11,7 @@ import platform
 ########################## GET SYSTEM Information ##########################
 SYSTEM_OS = platform.system()
 
-############################ Command Line Arguments ############################################
-# Create the argument parser
-parser = argparse.ArgumentParser(
-				prog=' Retargetting Parameteric models',
-				description='This folder contains the experiments used to determine whether dense correspondence between 3D objects can be used to determine whether dense shape correspondence methods, such as [SpiderMatch](!https://paulroetzer.github.io/publications/2024-06-19-spidermatch.html), or [functional maps](!https://dl.acm.org/doi/10.1145/2185520.2185526) can be used to retarget motion.',
-				epilog='')
 
-
-# Source and target parametric models
-parser.add_argument('--source',type=str, default="SMPL", help="Source mesh")  
-parser.add_argument('--target',type=str, default="SMPL", help="Target mesh")  
-
-# Experiment params
-parser.add_argument('--exp-name',type=str, default="Exp-1", help="Experiment name")  
-parser.add_argument('--out-dir',type=str, default="./save", help="Location where all experiements are saved")  
-parser.add_argument('--batch-size',type=int, default=10, help="Location where all experiements are saved")  
-
-# Experiment Variables 
-parser.add_argument('--pose',type=str, default="", help="Motion to be retargetted")  
-parser.add_argument('--shape', type=str, default="", help="Whether to change the shape of the target model")
-
-parser.add_argument('--distortions', dest='distortions', nargs='?', const=None, default=None, help="Distortions allowed")
-parser.add_argument('--distorion', type=str, default="", help="Whether to change the shape of the target model")
-
-parser.add_argument('-f', '--force',action='store_true',help="forces a re-run on retargetting even if pkl file containg smpl data is already present.")  # on/off flag
-
-parser.add_argument('--render', action='store_true', default=True, help="Render a video and save it it in RENDER_DIR. Can also be set in the utils.py")  # on/off flag
-
-parser.add_argument('--debug', dest='debug', action='store_true',  help="Debug and run on less number of frames")
-parser.add_argument('--no-debug', dest='debug', action='store_false',default=False, help="Debug and run on less number of frames")
-
-parser.add_argument('--gpu', dest='gpu', action='store_true', default=True,help="Whether to use CUDA or CPU")
-parser.add_argument('--no-gpu', dest='gpu', action='store_false',help="Whether to use CUDA or CPU")
 
 
 
